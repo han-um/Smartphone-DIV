@@ -1,0 +1,1146 @@
+<!DOCTYPE html>
+<html lang="en" >
+
+<head>
+  <meta charset="UTF-8">
+  <title>Masonry Gallery</title>
+ <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+<!-- CSS / GoogleFont --> 
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
+    
+<!-- CSS / Mansonry --> 
+<link rel="stylesheet" href="plugins/Mansonry/css/style.css">
+
+<!-- CSS / Sidebar -->     
+<link rel="stylesheet" href="plugins/Sidebar/css/style.css">
+  
+<!-- CSS / Bootstrap --> 
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+<!-- CSS / SweetAlert -->  
+<link rel="stylesheet" href="plugins/sweetalert/dist/sweetalert2.css">   
+    
+<!-- CSS / Animate -->
+<link href="https://cdn.jsdelivr.net/npm/animate.css@3.5.1" rel="stylesheet" type="text/css">
+    
+<!-- !!!! CSS / Template -->         
+<link rel="stylesheet" href="css/style.css">
+
+<!-- JS / Jquery --> 
+<script src="plugins/Jquery/jquery-3.3.1.slim.min.js" ></script> 
+    
+</head>
+<body class="device" id="device" onload="$('#contents').css('opacity', '1')" >
+<div class="wrap">
+   <nav class="sidebar-navigation hidden-lg-down" id="sidenav">
+	<ul>
+		<li onclick="location.href='/'">
+			<ion-icon name="ios-apps" style="font-size:24px;"></ion-icon>
+			<span class="tooltip">Main</span>
+		</li>
+		<li class="active" onclick="location.href='/device'">
+			<ion-icon name="ios-podium" style="font-size:24px;"></ion-icon>
+			<span class="tooltip">Compare Devices</span>
+		</li>
+		<li onclick="location.href='/size'">
+			<ion-icon name="ios-desktop" style="font-size:24px;"></ion-icon>
+			<span class="tooltip">Size Calibration</span>
+		</li>
+		<li onclick="location.href='/review'">
+			<ion-icon name="ios-paper" style="font-size:24px;"></ion-icon>
+			<span class="tooltip">Reviews</span>
+		</li>
+        <li onclick="location.href='/findstore'">
+			<ion-icon name="ios-map" style="font-size:24px;"></ion-icon>
+			<span class="tooltip">Find Store</span>
+		</li>
+		<li onclick="location.href='/aboutus'">
+			<ion-icon name="ios-business" style="font-size:24px;"></ion-icon>
+			<span class="tooltip">About Us</span>
+		</li>
+        <li onclick="location.href='/intro'">
+			<ion-icon name="ios-albums" style="font-size:24px;"></ion-icon>
+			<span class="tooltip">Intro</span>
+		</li>
+	</ul>
+</nav>
+    <!--스마트폰 선택 영역-->
+    <div class="selector" id="selector">
+        <ul id="selectorul">
+        </ul>
+    </div>
+<div class="contents" id="contents">
+    
+    <!--드래그 영역, 평상시에는 보이지 않는다-->
+    <!--좌측 드롭 박스-->
+    <transition name="fade">
+        <drop v-if="showdrop" class="drop" @drop="handleDrop1"> 
+        <div class="droparea">
+            <span class="droptext"><ion-icon name="exit" style="font-size:84px;"></ion-icon><br>Drop here </span>
+        </div>
+        </drop>
+       </transition>
+    <!--우측 드롭 박스-->
+    <transition name="fade">
+        <drop v-if="showdrop" class="drop" @drop="handleDrop2"><div class="droparea2">
+            <span class="droptext"><ion-icon name="exit" style="font-size:84px;"></ion-icon><br>Drop here</span>
+        </div></drop>
+    </transition>
+    
+    <!--정보 출력 영역-->  
+    <div class="infobox w-100">
+         <!--폰 이름 / (스크롤시) 상단 고정 헤더-->
+        <div class="infoheader w-100">
+            <div class="row headrow">
+          <template v-if="viewFirst"><transition name="fade">
+              <div class="headbox">
+                  <h2>{{c1_name}}</h2>
+                  <span class="headm col-sm-6">{{c1_brand}}</span>
+              </div>
+          </transition></template>
+          <template v-else>
+              <div class="headbox">
+                  <h2>&nbsp;</h2>
+              </div>
+          </template>
+          <template v-if="viewSecond"><transition name="fade">        
+              <div class="headbox" >
+                  <h2>{{c2_name}}</h2>
+                  <span class="headm col-sm-6">{{c2_brand}}</span>
+              </div>
+          </transition></template>
+          </div>
+        </div>
+        <!--스펙 데이터 출력부-->
+        <div class="row infospec">
+              <!--좌측 출력부-->
+              <div class="col-sm-6 wrapinfo" >
+                     <template v-if="viewFirst">
+                      <!--상단 스마트폰이미지-->
+                      <div class="imagebox"><center><img id="phoneimg1" class ="specimage"  :src="c1_img_src" :style="{ width: image1w + 'px', height : image1h + 'px' }" / ></center></div>
+
+                      <!--실제 스펙시트-->
+                          <div class="infotable" style="text-align: right">
+                              <div class="textleft" style="padding-top:0px;  background-color: #212121;">
+                                   <button class="btn-ch-s" v-on:click="hideshow"><ion-icon id="hidearrow" name="ios-arrow-down" style="font-size:14px; vertical-align:top;"></ion-icon></button>
+                                  <button class="btn-ch-s" v-on:click="detail1"><ion-icon name="ios-arrow-dropdown-circle" style="font-size:14px; vertical-align:top;"></ion-icon> VIEW DETAILS</button>
+                                  <button class="btn-ch-s"><ion-icon name="ios-clipboard" style="font-size:14px; vertical-align:top;"></ion-icon></button>
+                                  <button class="btn-ch-s"><ion-icon name="ios-color-palette" style="font-size:14px; vertical-align:top;"></ion-icon></button>
+                                  <button class="btn-ch-s"><ion-icon name="ios-settings" style="font-size:14px; vertical-align:top;"></ion-icon></button>
+                                  <button class="btn-ch-s"><ion-icon name="ios-camera" style="font-size:14px; vertical-align:top;"></ion-icon></button>
+                                  <button class="btn-ch-s"><ion-icon name="ios-battery-charging" style="font-size:14px; vertical-align:top;"></ion-icon></button>
+                              </div>
+
+                          <!--Overview(개요)-->
+                          <h2 class="textleft">Overview</h2>
+                              <hr class="blackline">
+                          <h5 class="textleft">Manufacturer</h5>
+                              <hr >
+                              {{c1_brand}}
+                          <h5 class="textleft">Size</h5>
+                              <hr >
+                              W : {{c1_width}} mm<br>
+                              H : {{c1_height}} mm<br>
+                              D : {{c1_depth}} mm
+                            <h5 class="textleft">Weight</h5>
+                              <hr >
+                              <div class="app">
+                                <chartjs-horizontal-bar-weight-1 :width="350" :height="50"></chartjs-horizontal-bar-weight-1>
+                            </div>
+                              {{c1_weight}}g<br>
+                          <h5 class="textleft">Resistance</h5>
+                              <hr >
+                              {{c1_resistance}}<br>
+
+                           <!--Display(화면)-->
+                          <h2 class="textleft">Display</h2>
+                              <hr class="blackline">                 
+                            <h5 class="textleft">Diagonal</h5>
+                              <hr >
+                              <div class="app">
+                                <chartjs-horizontal-bar-diagonal-1 :width="350" :height="50"></chartjs-horizontal-bar-diagonal-1>
+                            </div>
+                              {{c1_diagonal}} inch<br>    
+                            <h5 class="textleft">Type</h5>
+                              <hr >
+                              {{c1_display_type}}<br>
+                            <h5 class="textleft">Resolution</h5>
+                              <hr >
+                              {{c1_resolution}} pixels<br>
+                            <h5 class="textleft">Density</h5>
+                              <hr >
+                              {{c1_resolution}} PPI<br>
+
+                        <!--Processor (프로세서)-->
+                          <h2 class="textleft">Processor</h2>
+                              <hr class="blackline">                 
+                            <h5 class="textleft">Model Name</h5>
+                              <hr >
+                              {{c1_p_model}} <br>    
+                            <h5 class="textleft">CPU</h5>
+                              <hr >
+                              {{c1_p_cpu}} <br>    
+                            <h5 class="textleft">GPU</h5>
+                              <hr >
+                              {{c1_gpu}}<br>  
+                            <h5 class="textleft">RAM</h5>
+                              <hr >
+                              <div class="app">
+                                <chartjs-horizontal-bar-ram-1 :width="350" :height="50"></chartjs-horizontal-bar-ram-1>
+                            </div>
+                              {{c1_ram}}GB<br>  
+                            <h5 class="textleft">Score</h5>
+                              <hr >
+                              <div class="app">
+                                    <chartjs-horizontal-bar-score-1 :width="350" :height="50"></chartjs-horizontal-bar-score-1>
+                                </div>
+                              {{c1_score}}<br> 
+
+
+                        <!--Camera (카메라)-->
+                          <h2 class="textleft">Camera</h2>
+                              <hr class="blackline">
+                             <h5 class="textleft">Resolution(front)</h5>
+                              <hr >
+                              {{c1_c_r_resolution}} 00 Mega pixels <br>    
+                            <h5 class="textleft">Resolution(rear)</h5>
+                              <hr >
+                              {{c1_c_f_resolution}} 00 Mega pixels <br>   
+                            <h5 class="textleft">Sensor</h5>
+                              <hr >
+                              {{c1_c_sensor}} <br>   
+                            <h5 class="textleft">Flash</h5>
+                              <hr >
+                              {{c1_c_flash}} Flash Light <br>  
+
+
+                    <!--Battery (배터리)-->
+                          <h2 class="textleft">Battery</h2>
+                              <hr class="blackline">
+                             <h5 class="textleft">Capacity</h5>
+                              <hr >
+                              <div class="app">
+                                <chartjs-horizontal-bar-capacity-1 :width="350" :height="50"></chartjs-horizontal-bar-capacity-1>
+                            </div>
+                              {{c1_b_capacity}} mAh <br>    
+                            <h5 class="textleft">Type</h5>
+                              <hr >
+                              {{c1_b_type}} Battery <br>    
+
+
+
+                          </div>
+                  </template>
+                  <template v-else>
+                      <div class="infotable" style="text-align: right">
+                          <div style="padding-top:0px;  background-color: #212121;">
+                              <button class="btn-ch-s"><ion-icon name="ios-arrow-down" style="font-size:14px; vertical-align:top; color:#212121"></ion-icon>&nbsp;</button>
+                        </div>
+                          <center><span class="headm col-sm-6"><b>Drag &amp; Drop</b> here for info about the item</span></center>
+                      </div>
+                  </template>
+              </div>
+            
+              <!--우측 출력부-->
+              <div class="col-sm-6 wrapinfo" >
+                  <template v-if="viewSecond">
+                      <!--상단 스마트폰이미지-->
+                      <div class="imagebox"><center><img  id="phoneimg2" class ="specimage"  :src="c2_img_src" :style="{ width: image2w + 'px', height : image2h + 'px' }" / ></center></div>
+
+                      <!--실제 스펙시트-->
+                          <div class="infotable" style="text-align: left">
+                              <div style="padding-top:0px;  background-color: #212121; text-align: right">
+                                  <button class="btn-ch-s" v-on:click="detail2"><ion-icon name="ios-arrow-dropdown-circle" style="font-size:14px; vertical-align:top;"></ion-icon> VIEW DETAILS</button>
+                                  <button class="btn-ch-s"><ion-icon name="ios-arrow-down" style="font-size:14px; vertical-align:top; color:#212121"></ion-icon>&nbsp;</button>
+                            </div>
+                              
+                          <!--Overview(개요)-->
+                          <h2  class="textleft">&nbsp;</h2>
+                              <hr class="blackline">
+                          <h5  class="textleft">&nbsp;</h5>
+                              <hr >
+                              <span class="MidPadding">
+                              {{c2_brand}}
+                              </span>      
+                          <h5 class="textleft">&nbsp;</h5>
+                              <hr >
+                              <span class="MidPadding">
+                              W : {{c2_width}} mm<br>
+                              H : {{c2_height}} mm<br>
+                              D : {{c2_depth}} mm
+                              </span>
+                            <h5 class="textleft">&nbsp;</h5>
+                              <hr >
+                              <div class="app">
+                                <chartjs-horizontal-bar-weight-2 :width="350" :height="50"></chartjs-horizontal-bar-weight-2>
+                            </div>
+                              <span class="MidPadding">
+                              {{c2_weight}}g<br>
+                              </span>
+                          <h5 class="textleft">&nbsp;</h5>
+                              <hr >
+                              <span class="MidPadding">
+                              {{c2_resistance}}<br>
+                              </span>
+
+                           <!--Display(화면)-->
+                          <h2 class="textleft">&nbsp;</h2>
+                              <hr class="blackline">                 
+                            <h5 class="textleft">&nbsp;</h5>
+                              <hr >
+                              <div class="app">
+                                <chartjs-horizontal-bar-diagonal-2 :width="350" :height="50"></chartjs-horizontal-bar-diagonal-2>
+                            </div>
+                              <span class="MidPadding">
+                              {{c2_diagonal}} inch<br>
+                              </span>
+                            <h5 class="textleft">&nbsp;</h5>
+                              <hr >
+                              <span class="MidPadding">
+                              {{c2_display_type}}<br>
+                              </span>
+                            <h5 class="textleft">&nbsp;</h5>
+                              <hr >
+                              <span class="MidPadding">
+                              {{c2_resolution}} pixels<br>
+                              </span>
+                            <h5 class="textleft">&nbsp;</h5>
+                              <hr >
+                              <span class="MidPadding">
+                              {{c2_resolution}} PPI<br>
+                              </span>
+                        <!--Processor (프로세서)-->
+                          <h2 class="textleft">&nbsp;</h2>
+                              <hr class="blackline">                 
+                            <h5 class="textleft">&nbsp;</h5>
+                              <hr >
+                              <span class="MidPadding">
+                              {{c2_p_model}} <br> 
+                              </span>
+                            <h5 class="textleft">&nbsp;</h5>
+                              <hr >
+                              <span class="MidPadding">
+                              {{c2_p_cpu}} <br>  
+                              </span>
+                            <h5 class="textleft">&nbsp;</h5>
+                              <hr >
+                              <span class="MidPadding">
+                              {{c2_gpu}}<br>  
+                              </span>
+                            <h5 class="textleft">&nbsp;</h5>
+                              <hr >
+                              <div class="app">
+                                <chartjs-horizontal-bar-ram-2 :width="350" :height="50"></chartjs-horizontal-bar-ram-2>
+                            </div>
+                              <span class="MidPadding">
+                              {{c2_ram}}GB<br>  
+                              </span>
+                            <h5 class="textleft">&nbsp;</h5>
+                              <hr >
+                              <div class="app">
+                                <chartjs-horizontal-bar-score-2 :width="350" :height="50"></chartjs-horizontal-bar-score-2>
+                            </div>                           
+                              <span class="MidPadding">
+                              {{c2_score}}<br> 
+                              </span>
+
+                        <!--Camera (카메라)-->
+                          <h2 class="textleft">&nbsp;</h2>
+                              <hr class="blackline">
+                             <h5 class="textleft">&nbsp;</h5>
+                              <hr >
+                              <span class="MidPadding">
+                              {{c2_c_r_resolution}} 00 Mega pixels <br>
+                              </span>
+                            <h5 class="textleft">&nbsp;</h5>
+                              <hr >
+                              <span class="MidPadding">
+                              {{c2_c_f_resolution}} 00 Mega pixels <br>
+                              </span>
+                            <h5 class="textleft">&nbsp;</h5>
+                              <hr >
+                              <span class="MidPadding">
+                              {{c2_c_sensor}} <br>   
+                              </span>
+                            <h5 class="textleft">&nbsp;</h5>
+                              <hr >
+                              <span class="MidPadding">
+                              {{c2_c_flash}} Flash Light <br>  
+                              </span>
+
+                    <!--Battery (배터리)-->
+                          <h2 class="textleft">&nbsp;</h2>
+                              <hr class="blackline">
+                             <h5 class="textleft">&nbsp;</h5>
+                              <hr >
+                              <div class="app">
+                                <chartjs-horizontal-bar-capacity-2 :width="350" :height="50"></chartjs-horizontal-bar-capacity-2>
+                            </div>
+                              <span class="MidPadding">
+                              {{c2_b_capacity}} mAh <br>
+                              </span>
+                            <h5 class="textleft">&nbsp;</h5>
+                              <hr >
+                              <span class="MidPadding">
+                              {{c2_b_type}} Battery <br>    
+                              </span>
+
+
+                          </div>
+                  </template>
+                  <template v-else>
+                      <div class="infotable" style="text-align: right">
+                          <div style="padding-top:0px;  background-color: #212121;">
+                              <button class="btn-ch-s"><ion-icon name="ios-arrow-down" style="font-size:14px; vertical-align:top; color:#212121"></ion-icon>&nbsp;</button>
+                        </div>
+                          <center><span class="headm col-sm-6"><b>Drag &amp; Drop</b> here for info about the item</span></center>
+                      </div>
+                  </template>
+                </div>
+              </div>
+        </div>
+    </div>    
+</div>  
+
+ <!-- JSON / Specs -->  
+<script type="text/javascript" src="js/spec.json"></script>
+    
+<!-- JS / Bootstrap --> 
+<script src="plugins/bootstrap/js/bootstrap.js" ></script>
+    
+<!-- JS / Masonry -->    
+<script src='https://cdnjs.cloudflare.com/ajax/libs/masonry/3.3.2/masonry.pkgd.min.js'></script>    
+<script  src="plugins/Mansonry/js/index.js"></script>
+
+<!-- JS / Sidebar --> 
+<script  src="plugins/Sidebar/js/index.js"></script>
+
+<!-- JS / Ionicons -->     
+<script src="https://unpkg.com/ionicons@4.1.2/dist/ionicons.js"></script>
+ 
+<!-- JS / SweetAlert -->    
+<script src="plugins/sweetalert/dist/sweetalert2.js"></script>   
+    
+<!-- JS / Vue.js -->     
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+<script src="plugins/Drag/vue-drag-drop.browser.js"></script>
+
+<!-- JS / Vue-Charts.js-->     
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
+<script src="https://unpkg.com/vue-chartjs/dist/vue-chartjs.min.js"></script>
+
+<script>
+var spec;
+$( document ).ready(function() {
+    
+    // 모니터 크기 확인, 없을경우 기본값 설정
+    var convertw = 0;
+    var converth = 0;
+    if(localStorage.getItem('convertw')==null || localStorage.getItem('converth') == null){
+        convertw = 2;
+        converth = 9;
+    }else{
+        convertw = localStorage.getItem('convertw');
+        converth = localStorage.getItem('converth'); 
+    }
+
+	spec = JSON.parse(window.data);
+    var ColorList = [ "#c4bdaf", "#aaa69d", "#9a9588", "#84817a", "#676767" ];
+    var ColorIndex = 0;
+    var IndexVector = true;
+    for(i=0; i<spec.length; i++){
+    $("#selectorul").append("<li><drag @dragstart=' dragdata("+i+")' class='drag'><div class='select_item' style='background-color:"+ColorList[ColorIndex]+"'>"+spec[i].name+"<br><img src='img/phone/"+spec[i].img_src+".png'></div></drag></li>");
+        if(ColorIndex == 4){
+            IndexVector = false;
+        }else if(ColorIndex == 0){
+            IndexVector = true;
+        }
+        if(IndexVector){
+        ColorIndex = ColorIndex + 1;
+        }else{
+          ColorIndex = ColorIndex - 1;  
+        }
+    }      
+    Vue.use(VueDragDrop);
+    Vue.component('drag', VueDragDrop.Drag)
+    Vue.component('drop', VueDragDrop.Drop)
+    Vue.use(VueDragDrop)
+    var demo = new Vue({
+      el: '.wrap',
+      data: () => ({ 
+                c1_name : "",
+                c1_brand : "",
+                c1_width : 0,
+                c1_height : 0,
+                c1_depth : 0,
+                c1_weight : 0,
+                c1_resistance : "",
+                c1_diagonal : 0,
+                c1_display_type : "",
+                c1_resolution : "",
+                c1_density : "",
+                c1_p_model : "",
+                c1_p_cpu : "",
+                c1_p_type : "",
+                c1_frequency : 0,
+                c1_gpu : "",
+                c1_ram : 0,
+                c1_score : 0,
+                c1_c_f_resolution : 0,
+                c1_c_r_resolution : 0,
+                c1_c_sensor : "",
+                c1_c_flash : "",
+                c1_b_capacity : 0,
+                c1_b_type : "",
+                c1_os : "",
+                c1_unveiled : "",
+                c1_bg_color : null,
+                c1_img_src : "",
+                c2_name : "",
+                c2_brand : "",
+                c2_width : 0,
+                c2_height : 0,
+                c2_depth : 0,
+                c2_weight : 0,
+                c2_resistance : "",
+                c2_diagonal : 0,
+                c2_display_type : "",
+                c2_resolution : "",
+                c2_density : "",
+                c2_p_model : "",
+                c2_p_cpu : "",
+                c2_p_type : "",
+                c2_frequency : 0,
+                c2_gpu : "",
+                c2_ram : 0,
+                c2_score : 0,
+                c2_c_f_resolution : 0,
+                c2_c_r_resolution : 0,
+                c2_c_sensor : "",
+                c2_c_flash : "",
+                c2_b_capacity : 0,
+                c2_b_type : "",
+                c2_os : "",
+                c2_unveiled : "",
+                c2_bg_color : null,
+                c2_img_src : "",
+          image1w : 1,
+          image1h : 1,
+          image2w : 1,
+          image2h : 1,
+          showdrop: false,
+          viewSecond : false,
+          viewFirst : false,
+          viewboth: true,
+          dragitem : '',
+      }),
+      methods: {
+        hideshow: function (event) {
+            if(this.viewboth==true){
+                $('.infotable').css('top', '700px' );
+                $('#hidearrow').attr('name','ios-arrow-up');
+                this.viewboth = false;
+            }else if(this.viewboth==false){
+                $('.infotable').css('top', '280px' );
+                $('#hidearrow').attr('name','ios-arrow-down');
+                this.viewboth = true;
+            }
+        },
+        detail1 : function (event) {
+            localStorage.setItem('detailname',this.c1_name);
+            localStorage.setItem('detailimg',this.c1_img_src);
+            localStorage.setItem('detailw',this.c1_width);
+            localStorage.setItem('detailh',this.c1_height);
+            localStorage.setItem('detailbrand',this.c1_brand);
+             //
+                swal({
+                    width: '350px',
+                    type: 'success',
+                    title: 'Saved!',
+                    text: localStorage.getItem('detailname'),
+                    footer: '<a></a>',
+                }).then(function(result) {
+                if (result) {
+                    location.href="/detail";
+                }
+                }).done();
+            //    
+        },
+        detail2 : function (event) {            
+            localStorage.setItem('detailname',this.c2_name);
+            localStorage.setItem('detailimg',this.c2_img_src);
+            localStorage.setItem('detailw',this.c2_width);
+            localStorage.setItem('detailh',this.c2_height);
+            localStorage.setItem('detailbrand',this.c2_brand);
+                //
+                swal({
+                    width: '350px',
+                    type: 'success',
+                    title: 'Saved!',
+                    text: localStorage.getItem('detailname'),
+                    footer: '<a></a>',
+                }).then(function(result) {
+                if (result) {
+                    location.href="/detail";
+                }
+                }).done();
+            //    
+        },
+        dragdata(transferData) {
+           this.showdrop=true;
+           this.dragitem=transferData;
+        },
+        handleDrop1(data) {
+            this.showdrop = false;
+            this.viewFirst = true;
+            // 출력
+            this.c1_name = spec[this.dragitem].name;
+            this.c1_brand  = spec[this.dragitem].brand;
+            this.c1_width  = spec[this.dragitem].width;
+            this.c1_height  = spec[this.dragitem].height;
+            this.c1_depth  = spec[this.dragitem].depth;
+            this.c1_weight  = spec[this.dragitem].weight;
+            this.c1_resistance  = spec[this.dragitem].resistance;
+            this.c1_diagonal  = spec[this.dragitem].diagonal;
+            this.c1_display_type  = spec[this.dragitem].display_type;
+            this.c1_resolution  = spec[this.dragitem].resolution ;
+            this.c1_density  = spec[this.dragitem].density;
+            this.c1_p_model  = spec[this.dragitem].p_model;
+            this.c1_p_cpu  = spec[this.dragitem].p_cpu;
+            this.c1_p_type  = spec[this.dragitem].p_type;
+            this.c1_frequency = spec[this.dragitem].frequency;
+            this.c1_gpu  = spec[this.dragitem].gpu;
+            this.c1_ram  = spec[this.dragitem].ram;
+            this.c1_score  = spec[this.dragitem].score;
+            this.c1_c_f_resolution  = spec[this.dragitem].c_f_resolution;
+            this.c1_c_r_resolution  = spec[this.dragitem].c_r_resolution;
+            this.c1_c_sensor  = spec[this.dragitem].c_sensor;
+            this.c1_c_flash  = spec[this.dragitem].c_flash;
+            this.c1_b_capacity  = spec[this.dragitem].b_capacity;
+            this.c1_b_type  = spec[this.dragitem].b_type;
+            this.c1_os  = spec[this.dragitem].os;
+            this.c1_unveiled  = spec[this.dragitem].unveiled;
+            this.c1_bg_color  = spec[this.dragitem].bg_color;
+            this.c1_img_src  = "img/phone/"+spec[this.dragitem].img_src+".png";
+            this.image1w = convertw*spec[this.dragitem].width;
+            this.image1h = convertw*spec[this.dragitem].height;
+
+            var score = this.c1_score;
+            Vue.component('chartjs-horizontal-bar-score-1', {
+                extends: VueChartJs.HorizontalBar,
+                mounted() {
+                    this.renderChart({
+                        //labels: ['Score'],
+                        datasets: [
+                            {
+                                label: 'score',
+                                backgroundColor: '#f87979',
+                                data: [score]
+                            }
+                        ]
+                    }, {responsive: true, 
+                        maintainAspectRatio: false,
+                        label: {
+                            display: false
+                        },
+                        legend: {
+                            display: false
+                        },
+                        scales: {
+                            xAxes: [{
+                                display: false,
+                                ticks: {
+                                    min: 0,
+                                    max: 400,
+                                    stepSize: 100,
+                                    reverse: true
+                                },
+                                gridLines: {
+                                    display: false
+                                }
+                            }],
+                            yAXes: [{
+                                display: false,
+                                gridLines: {
+                                    display: true
+                                }
+                            }]
+                        }
+                        
+                    })
+                }
+            })
+            var capacity = this.c1_b_capacity;
+            Vue.component('chartjs-horizontal-bar-capacity-1', {
+                extends: VueChartJs.HorizontalBar,
+                mounted() {
+                    this.renderChart({
+                        //labels: ['Score'],
+                        datasets: [
+                            {
+                                label: 'capacity',
+                                backgroundColor: '#79b2f8',
+                                data: [capacity]
+                            }
+                        ]
+                    }, {responsive: true, 
+                        maintainAspectRatio: false,
+                        label: {
+                            display: false
+                        },
+                        legend: {
+                            display: false
+                        },
+                        scales: {
+                            xAxes: [{
+                                display: false,
+                                ticks: {
+                                    min: 0,
+                                    max: 5000,
+                                    stepSize: 1000,
+                                    reverse: true
+                                },
+                                gridLines: {
+                                    display: false
+                                }
+                            }],
+                            yAXes: [{
+                                display: false,
+                                gridLines: {
+                                    display: true
+                                }
+                            }]
+                        }
+                        
+                    })
+                }
+            })
+            var ram = this.c1_ram;
+            Vue.component('chartjs-horizontal-bar-ram-1', {
+                extends: VueChartJs.HorizontalBar,
+                mounted() {
+                    this.renderChart({
+                        //labels: ['Score'],
+                        datasets: [
+                            {
+                                label: 'ram',
+                                backgroundColor: '#f87979',
+                                data: [ram]
+                            }
+                        ]
+                    }, {responsive: true, 
+                        maintainAspectRatio: false,
+                        label: {
+                            display: false
+                        },
+                        legend: {
+                            display: false
+                        },
+                        scales: {
+                            xAxes: [{
+                                display: false,
+                                ticks: {
+                                    min: 0,
+                                    max: 10,
+                                    stepSize: 2,
+                                    reverse: true
+                                },
+                                gridLines: {
+                                    display: false
+                                }
+                            }],
+                            yAXes: [{
+                                display: false,
+                                gridLines: {
+                                    display: true
+                                }
+                            }]
+                        }
+                        
+                    })
+                }
+            })
+            var diagonal = this.c1_diagonal;
+            Vue.component('chartjs-horizontal-bar-diagonal-1', {
+                extends: VueChartJs.HorizontalBar,
+                mounted() {
+                    this.renderChart({
+                        //labels: ['Score'],
+                        datasets: [
+                            {
+                                label: 'diagonal',
+                                backgroundColor: '#79f8e7',
+                                data: [diagonal]
+                            }
+                        ]
+                    }, {responsive: true, 
+                        maintainAspectRatio: false,
+                        label: {
+                            display: false
+                        },
+                        legend: {
+                            display: false
+                        },
+                        scales: {
+                            xAxes: [{
+                                display: false,
+                                ticks: {
+                                    min: 0,
+                                    max: 10,
+                                    stepSize: 1,
+                                    reverse: true
+                                },
+                                gridLines: {
+                                    display: false
+                                }
+                            }],
+                            yAXes: [{
+                                display: false,
+                                gridLines: {
+                                    display: true
+                                }
+                            }]
+                        }
+                        
+                    })
+                }
+            })
+            var weight = this.c1_weight;
+            Vue.component('chartjs-horizontal-bar-weight-1', {
+                extends: VueChartJs.HorizontalBar,
+                mounted() {
+                    this.renderChart({
+                        //labels: ['Score'],
+                        datasets: [
+                            {
+                                label: 'weight',
+                                backgroundColor: '#be79f7',
+                                data: [weight]
+                            }
+                        ]
+                    }, {responsive: true, 
+                        maintainAspectRatio: false,
+                        label: {
+                            display: false
+                        },
+                        legend: {
+                            display: false
+                        },
+                        scales: {
+                            xAxes: [{
+                                display: false,
+                                ticks: {
+                                    min: 100,
+                                    max: 250,
+                                    stepSize: 10,
+                                    reverse: true
+                                },
+                                gridLines: {
+                                    display: false
+                                }
+                            }],
+                            yAXes: [{
+                                display: false,
+                                gridLines: {
+                                    display: true
+                                }
+                            }]
+                        }
+                        
+                    })
+                }
+            })
+        },
+        handleDrop2(data) {
+            this.showdrop = false;
+            this.viewSecond = true;
+            // 출력
+            this.c2_name = spec[this.dragitem].name;
+            this.c2_brand  = spec[this.dragitem].brand;
+            this.c2_width  = spec[this.dragitem].width;
+            this.c2_height  = spec[this.dragitem].height;
+            this.c2_depth  = spec[this.dragitem].depth;
+            this.c2_weight  = spec[this.dragitem].weight;
+            this.c2_resistance  = spec[this.dragitem].resistance;
+            this.c2_diagonal  = spec[this.dragitem].diagonal;
+            this.c2_display_type  = spec[this.dragitem].display_type;
+            this.c2_resolution  = spec[this.dragitem].resolution ;
+            this.c2_density  = spec[this.dragitem].density;
+            this.c2_p_model  = spec[this.dragitem].p_model;
+            this.c2_p_cpu  = spec[this.dragitem].p_cpu;
+            this.c2_p_type  = spec[this.dragitem].p_type;
+            this.c2_frequency = spec[this.dragitem].frequency;
+            this.c2_gpu  = spec[this.dragitem].gpu;
+            this.c2_ram  = spec[this.dragitem].ram;
+            this.c2_score  = spec[this.dragitem].score;
+            this.c2_c_f_resolution  = spec[this.dragitem].c_f_resolution;
+            this.c2_c_r_resolution  = spec[this.dragitem].c_r_resolution;
+            this.c2_c_sensor  = spec[this.dragitem].c_sensor;
+            this.c2_c_flash  = spec[this.dragitem].c_flash;
+            this.c2_b_capacity  = spec[this.dragitem].b_capacity;
+            this.c2_b_type  = spec[this.dragitem].b_type;
+            this.c2_os  = spec[this.dragitem].os;
+            this.c2_unveiled  = spec[this.dragitem].unveiled;
+            this.c2_bg_color  = spec[this.dragitem].bg_color;
+            this.c2_img_src  = "img/phone/"+spec[this.dragitem].img_src+".png";
+            this.image2w = convertw*spec[this.dragitem].width;
+            this.image2h = convertw*spec[this.dragitem].height;
+
+            var score = this.c2_score;
+            Vue.component('chartjs-horizontal-bar-score-2', {
+                extends: VueChartJs.HorizontalBar,
+                mounted() {
+                    this.renderChart({
+                        //labels: ['Score'],
+                        datasets: [
+                            {
+                                label: 'score',
+                                backgroundColor: '#f87979',
+                                data: [score]
+                            }
+                        ]
+                    }, {responsive: true, 
+                        maintainAspectRatio: false,
+                        label: {
+                            display: false
+                        },
+                        legend: {
+                            display: false
+                        },
+                        scales: {
+                            xAxes: [{
+                                display: false,
+                                ticks: {
+                                    min: 0,
+                                    max: 400,
+                                    stepSize: 100,
+                                    reverse: false
+                                },
+                                gridLines: {
+                                    display: false
+                                }
+                            }],
+                            yAXes: [{
+                                display: false,
+                                gridLines: {
+                                    display: true
+                                }
+                            }]
+                        }
+                        
+                    })
+                }
+            })
+            var capacity = this.c2_b_capacity;
+            Vue.component('chartjs-horizontal-bar-capacity-2', {
+                extends: VueChartJs.HorizontalBar,
+                mounted() {
+                    this.renderChart({
+                        //labels: ['Score'],
+                        datasets: [
+                            {
+                                label: 'battery',
+                                backgroundColor: '#79b2f8',
+                                data: [capacity]
+                            }
+                        ]
+                    }, {responsive: true, 
+                        maintainAspectRatio: false,
+                        label: {
+                            display: false
+                        },
+                        legend: {
+                            display: false
+                        },
+                        scales: {
+                            xAxes: [{
+                                display: false,
+                                ticks: {
+                                    min: 0,
+                                    max: 5000,
+                                    stepSize: 1000,
+                                    reverse: false
+                                },
+                                gridLines: {
+                                    display: false
+                                }
+                            }],
+                            yAXes: [{
+                                display: false,
+                                gridLines: {
+                                    display: true
+                                }
+                            }]
+                        }
+                        
+                    })
+                }
+            })
+            var ram = this.c2_ram;
+            Vue.component('chartjs-horizontal-bar-ram-2', {
+                extends: VueChartJs.HorizontalBar,
+                mounted() {
+                    this.renderChart({
+                        //labels: ['Score'],
+                        datasets: [
+                            {
+                                label: 'ram',
+                                backgroundColor: '#f87979',
+                                data: [ram]
+                            }
+                        ]
+                    }, {responsive: true, 
+                        maintainAspectRatio: false,
+                        label: {
+                            display: false
+                        },
+                        legend: {
+                            display: false
+                        },
+                        scales: {
+                            xAxes: [{
+                                display: false,
+                                ticks: {
+                                    min: 0,
+                                    max: 10,
+                                    stepSize: 2,
+                                    reverse: false
+                                },
+                                gridLines: {
+                                    display: false
+                                }
+                            }],
+                            yAXes: [{
+                                display: false,
+                                gridLines: {
+                                    display: true
+                                }
+                            }]
+                        }
+                        
+                    })
+                }
+            })
+            var diagonal = this.c2_diagonal;
+            Vue.component('chartjs-horizontal-bar-diagonal-2', {
+                extends: VueChartJs.HorizontalBar,
+                mounted() {
+                    this.renderChart({
+                        //labels: ['Score'],
+                        datasets: [
+                            {
+                                label: 'diagonal',
+                                backgroundColor: '#79f8e7',
+                                data: [diagonal]
+                            }
+                        ]
+                    }, {responsive: true, 
+                        maintainAspectRatio: false,
+                        label: {
+                            display: false
+                        },
+                        legend: {
+                            display: false
+                        },
+                        scales: {
+                            xAxes: [{
+                                display: false,
+                                ticks: {
+                                    min: 0,
+                                    max: 10,
+                                    stepSize: 1,
+                                    reverse: false
+                                },
+                                gridLines: {
+                                    display: false
+                                }
+                            }],
+                            yAXes: [{
+                                display: false,
+                                gridLines: {
+                                    display: true
+                                }
+                            }]
+                        }
+                        
+                    })
+                }
+            })
+            var weight = this.c2_weight;
+            Vue.component('chartjs-horizontal-bar-weight-2', {
+                extends: VueChartJs.HorizontalBar,
+                mounted() {
+                    this.renderChart({
+                        //labels: ['Score'],
+                        datasets: [
+                            {
+                                label: 'weight',
+                                backgroundColor: '#be79f7',
+                                data: [weight]
+                            }
+                        ]
+                    }, {responsive: true, 
+                        maintainAspectRatio: false,
+                        label: {
+                            display: false
+                        },
+                        legend: {
+                            display: false
+                        },
+                        scales: {
+                            xAxes: [{
+                                display: false,
+                                ticks: {
+                                    min: 100,
+                                    max: 250,
+                                    stepSize: 10,
+                                    reverse: false
+                                },
+                                gridLines: {
+                                    display: false
+                                }
+                            }],
+                            yAXes: [{
+                                display: false,
+                                gridLines: {
+                                    display: true
+                                }
+                            }]
+                        }
+                        
+                    })
+                }
+            })
+        },
+      },
+    });
+});
+</script>
+    
+<!-- JS / less --> 
+<script src="plugins/less/less.min.js" ></script>
+
+<!-- JS / headerfix -->    
+<script>
+$(function(){
+
+  $(window).scroll(function() {
+    var scroll = getCurrentScroll();
+      if (  document.documentElement.scrollTop >= 100 ) {
+           $('.infoheader').addClass('shrink');
+          $('.headbox').addClass('shrink');
+        }
+        else {
+            $('.infoheader').removeClass('shrink');
+        }
+  });
+function getCurrentScroll() {
+    return window.pageYOffset || document.documentElement.scrollTop;
+    }
+});    
+</script>
+
+</body>
+
+</html>

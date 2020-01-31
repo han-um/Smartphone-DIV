@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en" >
+
+<head>
+  <meta charset="UTF-8">
+  <title>Masonry Gallery</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+<!-- CSS / Bootstrap --> 
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+<!-- CSS / GoogleFont --> 
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
+    
+<!-- CSS / FontAwsome --> 
+<link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css'>
+
+<!-- CSS / Mansonry --> 
+<link rel="stylesheet" href="plugins/Mansonry/css/style.css">
+
+<!-- CSS / Sidebar -->     
+<link rel="stylesheet" href="plugins/Sidebar/css/style.css">
+  
+<!-- !!!! CSS / Template -->         
+<link rel="stylesheet" href="css/style.css"> 
+
+<!-- CSS / SweetAlert -->  
+<link rel="stylesheet" href="plugins/sweetalert/dist/sweetalert2.css">   
+    
+<!-- CSS / Youtube -->         
+<link rel="stylesheet" href="plugins/youtube/style.css"> 
+    
+<!-- CSS / CustomScrollbar -->   
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+  <link rel='stylesheet prefetch' href='http://cdn.jsdelivr.net/jquery.mcustomscrollbar/3.0.6/jquery.mCustomScrollbar.min.css'>
+
+    
+</head>
+
+<body class="size" onload="$('#contents').css('opacity', '1')">
+<nav class="sidebar-navigation hidden-lg-down" id="sidenav">
+	<ul>
+		<li onclick="location.href='/'">
+			<ion-icon name="ios-apps" style="font-size:24px;"></ion-icon>
+			<span class="tooltip">Main</span>
+		</li>
+		<li class="active" onclick="location.href='/device'">
+			<ion-icon name="ios-podium" style="font-size:24px;"></ion-icon>
+			<span class="tooltip">Compare Devices</span>
+		</li>
+		<li onclick="location.href='/size'">
+			<ion-icon name="ios-desktop" style="font-size:24px;"></ion-icon>
+			<span class="tooltip">Size Calibration</span>
+		</li>
+		<li onclick="location.href='/review'">
+			<ion-icon name="ios-paper" style="font-size:24px;"></ion-icon>
+			<span class="tooltip">Reviews</span>
+		</li>
+        <li onclick="location.href='/findstore'">
+			<ion-icon name="ios-map" style="font-size:24px;"></ion-icon>
+			<span class="tooltip">Find Store</span>
+		</li>
+		<li onclick="location.href='/aboutus'">
+			<ion-icon name="ios-business" style="font-size:24px;"></ion-icon>
+			<span class="tooltip">About Us</span>
+		</li>
+        <li onclick="location.href='/intro'">
+			<ion-icon name="ios-albums" style="font-size:24px;"></ion-icon>
+			<span class="tooltip">Intro</span>
+		</li>
+	</ul>
+</nav>
+  <section class="container-fluid gallery bg-faded" id="contents" >
+      <!-- 여기서부터 본문 -->
+      <div>
+           <div class="headbox">
+               <br>
+                  <h2 id="d_name" style="font-size:50px">{{c1_name}}</h2><br>
+                  <span id="d_brand" class="headm col-sm-6">{{c1_brand}}</span>
+               <br>
+               <br>
+              </div>
+          <center><h2 id="d_name" style="font-size:30px">Actual Size</h2></center><br>
+          <div class="imagebox"><center><img class ="specimage" id="specimage" src="" / ></center></div>
+      </div>
+      <br><br>
+      <div class="youtube">
+                <center><h2 id="d_name" style="font-size:30px">Related Video</h2></center><br><br>
+  <div class="youtube-selected">
+    <div id="youtube-player"></div>
+    <p id="video-title" class="video-title"></p>
+  </div>
+  <div id="youtube-list" class="youtube-list">
+    <ul id="appendul">
+    </ul>
+  </div>
+</div>
+  </section>
+<!-- Modal -->
+    
+    
+<!-- JS / Jquery --> 
+<script src='https://code.jquery.com/jquery-2.2.4.min.js'></script>
+    
+<!-- JS / Bootstrap --> 
+<script src="plugins/bootstrap/js/bootstrap.js" ></script>
+    
+<!-- JS / Masonry -->    
+<script src='https://cdnjs.cloudflare.com/ajax/libs/masonry/3.3.2/masonry.pkgd.min.js'></script>    
+<script  src="plugins/Mansonry/js/index.js"></script>
+
+<!-- JS / Sidebar --> 
+<script  src="plugins/Sidebar/js/index.js"></script>
+
+<!-- JS / Ionicons -->     
+<script src="https://unpkg.com/ionicons@4.1.2/dist/ionicons.js"></script>
+
+<!-- JS / Vue.js -->     
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    
+<!-- JS / less --> 
+<script src="plugins/less/less.min.js" ></script>
+
+<!-- JS / SweetAlert -->    
+<script src="plugins/sweetalert/dist/sweetalert2.js"></script> 
+        
+<!-- JS / Youtube , CustomScrollbar -->
+<script src='http://cdn.jsdelivr.net/jquery.mcustomscrollbar/3.0.6/jquery.mCustomScrollbar.concat.min.js'></script>
+
+<script>
+$( document ).ready(function() {
+var convertw = 0;
+var converth = 0;
+if(localStorage.getItem('convertw')==null || localStorage.getItem('converth') == null){
+    convertw = 2;
+    converth = 9;
+}else{
+    convertw = localStorage.getItem('convertw');
+    converth = localStorage.getItem('converth'); 
+}
+var selected_name = localStorage.getItem('detailname');
+    if(localStorage.getItem('detailname')==''){
+                              //
+                            swal({
+                                type: 'error',
+                                title: 'Oops...',
+                                text: 'Choose Your Device First',
+                                footer: '<a></a>',
+                              }).then(function(result) {
+                                if (result) {
+                                    location.replace('device.html');
+                                }
+                              }).done();
+                              //
+
+    }
+    
+//이미지 처리
+converth = converth * localStorage.getItem('detailh');
+convertw = convertw * localStorage.getItem('detailw');
+$("#specimage").attr('src',localStorage.getItem('detailimg'));
+$('#specimage').css('width', convertw );
+$('#specimage').css('height', converth );
+//이름 처리 
+$("#d_name").html(localStorage.getItem('detailname'));
+$("#d_brand").html(localStorage.getItem('detailbrand'));
+    
+$.ajax({
+  dataType: "json",
+  url: 
+    'https://www.googleapis.com/youtube/v3/search'+
+    '?part=snippet'+
+    '&maxResults=30'+
+    '&order=viewCount'+
+    '&q='+selected_name+
+    '&type=video'+
+    '&videoDefinition=high'+
+    '&key=AIzaSyASKEmWJh-vxt-Jp5HHsqosJByaSoVxHh4'
+}).done(function(data){
+	/* Initial */
+	var tag = document.createElement('script');
+	tag.src = "https://www.youtube.com/iframe_api";
+	var firstScriptTag = document.getElementsByTagName('script')[0];
+	firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+	var player;
+	
+	onYouTubeIframeAPIReady = function(event){
+		player = new YT.Player('youtube-player', {
+			videoId: data.items[0].id.videoId
+		});
+	}
+	
+	$('#video-title').text(data.items[0].snippet.title);
+	$('#youtube-list').mCustomScrollbar({theme: 'dark'});
+	
+	/* List */
+	var length = data.items.length;
+	
+	for(var i=0; i<length; i++){
+		var item = data.items[i];
+		var videoThumb = item.snippet.thumbnails.medium.url;
+		var videoTitle = item.snippet.title;
+		var videoId= item.id.videoId;
+        var link = "'https://www.youtube.com/watch?v="+videoId+"','_blank'";
+		li = '<li onClick="window.open('+link+')">'+					
+					'<img src="'+videoThumb+'" class="thumb">'+
+					'<p class="title"><span class="outer"><span class="inner">'+videoTitle+'</span></span></p>'+
+			'</li>';
+		$('#appendul').append(li);
+	}
+	
+ });  
+});
+</script>
+
+</body>
+
+</html>

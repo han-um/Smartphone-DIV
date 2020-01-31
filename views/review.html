@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en" >
+
+<head>
+  <meta charset="UTF-8">
+  <title>Masonry Gallery</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+<!-- CSS / Bootstrap --> 
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+<!-- CSS / GoogleFont --> 
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
+    
+<!-- CSS / FontAwsome --> 
+<link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css'>
+
+<!-- CSS / Mansonry --> 
+<link rel="stylesheet" href="plugins/Mansonry/css/style.css">
+
+<!-- CSS / Sidebar -->     
+<link rel="stylesheet" href="plugins/Sidebar/css/style.css">
+
+<!-- CSS / Scroll-Gallery -->     
+<link rel="stylesheet" href="plugins/scrollgall/css/style.css">
+
+<!-- !!!! CSS / Template -->         
+<link rel="stylesheet" href="css/style.css">    
+</head>
+
+<body onload="$('#contents').css('opacity', '1')">
+<nav class="sidebar-navigation hidden-lg-down" id="sidenav">
+	<ul>
+		<li onclick="location.href='/'">
+			<ion-icon name="ios-apps" style="font-size:24px;"></ion-icon>
+			<span class="tooltip">Main</span>
+		</li>
+		<li onclick="location.href='/device'">
+			<ion-icon name="ios-podium" style="font-size:24px;"></ion-icon>
+			<span class="tooltip">Compare Devices</span>
+		</li>
+		<li onclick="location.href='/size'">
+			<ion-icon name="ios-desktop" style="font-size:24px;"></ion-icon>
+			<span class="tooltip">Size Calibration</span>
+		</li>
+		<li class="active" onclick="location.href='/review'">
+			<ion-icon name="ios-paper" style="font-size:24px;"></ion-icon>
+			<span class="tooltip">Reviews</span>
+		</li>
+        <li onclick="location.href='/findstore'">
+			<ion-icon name="ios-map" style="font-size:24px;"></ion-icon>
+			<span class="tooltip">Find Store</span>
+		</li>
+		<li onclick="location.href='/aboutus'">
+			<ion-icon name="ios-business" style="font-size:24px;"></ion-icon>
+			<span class="tooltip">About Us</span>
+		</li>
+        <li onclick="location.href='/intro'">
+			<ion-icon name="ios-albums" style="font-size:24px;"></ion-icon>
+			<span class="tooltip">Intro</span>
+		</li>
+	</ul>
+</nav>
+  <section class="container-fluid gallery bg-faded" id="contents">
+      <h1>Reviews</h1>
+      <!-- 여기서부터 본문 -->
+      
+  <div class="header" id="top">
+   <h3>Scroll Down</h3>
+   <ion-icon name="arrow-down" style="font-size: 70px; color:white"></ion-icon>
+</div>
+
+<div class="section animate">
+   <div class="middle">
+      <img src="img\review\IPhone8.jpg">
+   </div>
+   <div class="left title">
+      <div class="content">
+         <h2>IPhone 8</h2>
+         <p>There’s extra power under the hood, which powers Apple’s new AR (augmented reality) app push, a tweaked display and camera, a glossy glass rear and the addition of wireless charging – plus.
+          
+          </p>
+         <a href="#" class="btn-primary">Learn more</a>
+      </div>
+   </div>
+   <div class="right tiles">
+      <img src="img\review\IPhone8_1.jpg" />
+      <img src="img\review\IPhone8_2.jpg" />
+      <img src="img\review\IPhone8_3.jpg" />
+      <img src="img\review\IPhone8_4.jpg" />
+   </div>
+</div>
+
+<div class="section">
+   <div class="middle">
+      <img src="img\review\IPhoneX.jpg" />
+   </div>
+   <div class="right title">
+      <div class="content">
+         <h2>IPhone X</h2>
+         <p> Losing the home button and altering the design was a dangerous move, but one that was sorely needed after years of similarity and the premium design, extra power, all-screen front mix together to create - by far - the best iPhone Apple's ever made. This is the closest to smartphone perfection Apple has ever got.</p>
+      </div>
+   </div>
+   
+   <div class="left tiles">
+      <img src="img\review\IPhoneX_1.jpg" />
+      <img src="img\review\IPhoneX_2.jpg" />
+      <img src="img\review\IPhoneX_3.jpg" />
+      <img src="img\review\IPhoneX_4.jpg" />
+   </div>
+   
+</div>
+
+<div class="section">
+   <div class="middle">
+      <img src="img\review\Galaxy_S9.jpg" />
+   </div>
+   <div class="left title">
+      <div class="content">
+         <h2>Galaxy S9</h2>
+         <p>The Samsung Galaxy S9 is a great phone, but one that hasn't really kicked on from the Galaxy S8, bringing a very similar design and screen to 2017's version. The improved biometrics were sorely needed, and the camera is a leap forward, but the amazing low light capabilities have resulted in sacrifices elsewhere. A top, top phone, but the S9 Plus outshines it.</p>
+      </div>
+   </div>
+   
+   <div class="right tiles">
+      <img src="img\review\Galaxy_S9_1.jpg" />
+      <img src="img\review\Galaxy_S9_2.jpg" />
+      <img src="img\review\Galaxy_S9_3.jpg" />
+      <img src="img\review\Galaxy_S9_4.jpg" />
+   </div>
+   
+</div>
+
+<div class="section">
+   <div class="middle">
+      <img src="img\review\GalaxyNote8.jpg" />
+   </div>
+   <div class="right title">
+      <div class="content">
+         <h2>Galaxy Note 8</h2>
+         <p>The Galaxy Note 8, has a large, beautiful display that pumps out stunningly lush colors and immersive deep blacks. It's got one of the very best cameras in all of the mobile industry, capable of producing crisp images in most lighting conditions. Its hardware is top notch in every way, from the newest mobile processor to the best in class industrial design.</p>
+      </div>
+   </div>
+   
+   <div class="left tiles">
+      <img src="img\review\GalaxyNote8_1.jpg" />
+      <img src="img\review\GalaxyNote8_2.jpg" />
+      <img src="img\review\GalaxyNote8_3.jpg" />
+      <img src="img\review\GalaxyNote8_4.jpg" />
+   </div>
+   
+</div>
+
+      <div class="section">
+   <div class="middle">
+      <img src="img\review\LG G7 ThinQ.jpg" />
+   </div>
+   <div class="left title">
+      <div class="content">
+         <h2>LG G7 ThinQ</h2>
+         <p>LG’s latest smartphone — the G7 ThinQ — comes very close to being a great phone. It packs high-end specifications, a modern design, and good battery life. But it’s just not that interesting. It lacks a strong visual identity, the unique features it has aren’t compelling reasons to buy the phone, and the camera falls short of the incredibly strong competition.</p>
+      </div>
+   </div>
+   
+   <div class="right tiles">
+      <img src="img\review\LG G7 ThinQ_1.jpg" />
+      <img src="img\review\LG G7 ThinQ_2.jpg" />
+      <img src="img\review\LG G7 ThinQ_3.jpg" />
+      <img src="img\review\LG G7 ThinQ_4.jpg" />
+   </div>
+   
+</div>
+
+<div class="section">
+   <div class="middle">
+      <img src="img\review\LG V30.jpg" />
+   </div>
+   <div class="right title">
+      <div class="content">
+         <h2>LG V30</h2>
+         <p>This is such a horrible phone, they advertise it as a waterproof and dust proof but it is not. I had my unit since December 2017 and I've bought it into repair twice. Thinking of going back into the Sony ecosystem again. My Xperia Z is still working the glass just shattered and is slow due to it's age. Sony's after sales is really horrible here in our country (Philippines).</p>
+      </div>
+   </div>
+   
+   <div class="left tiles">
+      <img src="img\review\LG V30_1.jpg" />
+      <img src="img\review\LG V30_2.jpg" />
+      <img src="img\review\LG V30_3.jpg" />
+      <img src="img\review\LG V30_4.jpg" />
+   </div>
+   
+</div>
+
+      <div class="section">
+   <div class="middle">
+      <img src="img\review\Hauwei P20.jpg" />
+   </div>
+   <div class="left title">
+      <div class="content">
+         <h2>Hauwei P20</h2>
+         <p>As an alternative to the Samsung Galaxy S9 and other expensive flagship phones, the Huawei P20 has a lot going for it, on paper. It’s very pretty, is astonishingly compact for a phone with such a large display, has a great camera with some unusual talents, and the price is pretty tempting for such a high-end phone.</p>
+      </div>
+   </div>
+   
+   <div class="right tiles">
+      <img src="img\review\Hauwei P20_1.jpg" />
+      <img src="img\review\Hauwei P20_2.jpg" />
+      <img src="img\review\Hauwei P20_3.jpg" />
+      <img src="img\review\Hauwei P20_4.jpg" />
+   </div>
+   
+</div>
+
+<div class="footer">
+   <a href="#top" class="scrollTo"><ion-icon name="arrow-up" style="font-size: 70px; color:white"></ion-icon></a>
+   <h1>Scroll Up</h1>
+</div>
+  </section>
+<!-- Modal -->
+    
+    
+<!-- JS / Jquery --> 
+<script src="plugins/Jquery/jquery-3.3.1.slim.min.js" ></script>
+    
+<!-- JS / Bootstrap --> 
+<script src="plugins/bootstrap/js/bootstrap.js" ></script>
+    
+<!-- JS / Masonry -->    
+<script src='https://cdnjs.cloudflare.com/ajax/libs/masonry/3.3.2/masonry.pkgd.min.js'></script>    
+<script  src="plugins/Mansonry/js/index.js"></script>
+
+<!-- JS / Sidebar --> 
+<script  src="plugins/Sidebar/js/index.js"></script>
+
+<!-- JS / Ionicons -->     
+<script src="https://unpkg.com/ionicons@4.1.2/dist/ionicons.js"></script>
+
+<!-- JS / Vue.js -->     
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    
+<!-- JS / less --> 
+<script src="plugins/less/less.min.js" ></script>
+
+<!-- JS / Scroll Gallery --> 
+<script  src="plugins/scrollgall/js/index.js"></script>
+
+
+</body>
+
+</html>

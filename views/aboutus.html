@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en" >
+
+<head>
+  <meta charset="UTF-8">
+  <title>Masonry Gallery</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+<!-- CSS / Bootstrap --> 
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+<!-- CSS / GoogleFont --> 
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
+    
+<!-- CSS / FontAwsome --> 
+<link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css'>
+
+<!-- CSS / Mansonry --> 
+<link rel="stylesheet" href="plugins/Mansonry/css/style.css">
+
+<!-- CSS / Sidebar -->     
+<link rel="stylesheet" href="plugins/Sidebar/css/style.css">
+  
+<!-- !!!! CSS / Template -->         
+<link rel="stylesheet" href="css/style.css">    
+</head>
+
+<body class="aboutus_main"  id="aboutus_main" onload="$('#contents').css('opacity', '1')">
+<nav class="sidebar-navigation hidden-lg-down" id="sidenav">
+	<ul>
+		<li onclick="location.href='/'">
+			<ion-icon name="ios-apps" style="font-size:24px;"></ion-icon>
+			<span class="tooltip">Main</span>
+		</li>
+		<li onclick="location.href='/device'">
+			<ion-icon name="ios-podium" style="font-size:24px;"></ion-icon>
+			<span class="tooltip">Compare Devices</span>
+		</li>
+		<li onclick="location.href='/size'">
+			<ion-icon name="ios-desktop" style="font-size:24px;"></ion-icon>
+			<span class="tooltip">Size Calibration</span>
+		</li>
+		<li onclick="location.href='/review'">
+			<ion-icon name="ios-paper" style="font-size:24px;"></ion-icon>
+			<span class="tooltip">Reviews</span>
+		</li>
+        <li onclick="location.href='/findstore'">
+			<ion-icon name="ios-map" style="font-size:24px;"></ion-icon>
+			<span class="tooltip">Find Store</span>
+		</li>
+		<li class="active" onclick="location.href='/aboutus'">
+			<ion-icon name="ios-business" style="font-size:24px;"></ion-icon>
+			<span class="tooltip">About Us</span>
+		</li>
+        <li onclick="location.href='/intro'">
+			<ion-icon name="ios-albums" style="font-size:24px;"></ion-icon>
+			<span class="tooltip">Intro</span>
+		</li>
+	</ul>
+</nav>
+  <section class="container-fluid gallery bg-faded">
+      <br><br>
+      <h1 class="info_color">Page Info</h1>
+      <!-- 여기서부터 본문 --> 
+      <div class="aboutus">
+          <h3>Team WBS</h3><br><br>
+          <p>충북대학교 2018 웹기반소프트웨어개발 개발팀.</p>
+          <div >
+              <div class="aboutus_in">
+                  <p><strong>구본철</strong></p>
+                  <p>소프트웨어학과 2013041035</p>
+              </div >
+              <div class="aboutus_in">
+                  <p><strong>남영우</strong></p>
+                  <p>소프트웨어학과 2013041053</p>
+              </div>
+              <div class="aboutus_in">
+                  <p><strong>장재영</strong></p>
+                  <p>소프트웨어학과 2013041019</p>
+              </div>
+          </div>
+          <br><br><br>
+          <div class="aboutas_OSS"> 
+              <h3><strong>OSS Notice</strong></h3>
+              <p><strong>Masonry-gallery</strong></p>
+              <p>https://github.com/alexdevero/Masonry-gallery</p>
+              <p>The MIT License</p>
+              <br>
+              <p><strong>Sidebar</strong></p>
+              <p>https://codepen.io/pixelsultan/pen/WrWZpd</p>
+              <p>The MIT License</p>
+              <br>
+              <p><strong>Ionicons</strong></p>
+              <p>https://github.com/ionic-team/ionicons</p>
+              <p>The MIT License</p>
+              <br>
+              <p><strong>Vue.js</strong></p>
+              <p>https://kr.vuejs.org/v2/guide/index.html</p>
+              <p>The MIT License</p>
+              <br>
+              <p><strong>VueDragDrop</strong></p>
+              <p>https://jsfiddle.net/xj1d96nb/</p>
+              <p>https://github.com/cameronhimself/vue-drag-drop#api</p>
+              <p>The MIT License</p>
+              <br>
+              <p><strong>SweetAlert</strong></p>
+              <p>https://sweetalert2.github.io/</p>
+              <p>The MIT License</p>
+              <br>
+              <p><strong>Slide-out-gallery</strong></p>
+              <p>https://codepen.io/teeganlincoln/pen/MaNxBv</p>
+              <p>The MIT License</p>
+              <br>
+              <p><strong>Split-slick slideShow</strong></p>
+              <p>https://gist.github.com/CodeMyUI/5255af54a3f909d3d1d7331d685b2ffe</p>
+              <p>The MIT License</p>
+              <br>
+              <p><strong>Interact.js</strong></p>
+              <p>https://github.com/taye/interact.js</p>
+              <p>The MIT License</p>
+              <br>
+              <p><strong>youtube api</strong></p>
+              <p>https://codepen.io/hanum/pen/KevdPX</p>
+              <p>Creative Commons Attribution 3.0 License</p>
+              <br>
+              <p><strong>Google Font</strong></p>
+              <p>https://fonts.google.com/</p>
+              <p>Creative Commons Attribution 3.0 License</p>
+          </div>
+      </div>
+  </section>
+<!-- Modal -->
+    
+    
+<!-- JS / Jquery --> 
+<script src="plugins/Jquery/jquery-3.3.1.slim.min.js" ></script>
+    
+<!-- JS / Bootstrap --> 
+<script src="plugins/bootstrap/js/bootstrap.js" ></script>
+    
+<!-- JS / Masonry -->    
+<script src='https://cdnjs.cloudflare.com/ajax/libs/masonry/3.3.2/masonry.pkgd.min.js'></script>    
+<script  src="plugins/Mansonry/js/index.js"></script>
+
+<!-- JS / Sidebar --> 
+<script  src="plugins/Sidebar/js/index.js"></script>
+
+<!-- JS / Ionicons -->     
+<script src="https://unpkg.com/ionicons@4.1.2/dist/ionicons.js"></script>
+
+<!-- JS / Vue.js -->     
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    
+<!-- JS / less --> 
+<script src="plugins/less/less.min.js" ></script>
+
+
+</body>
+
+</html>

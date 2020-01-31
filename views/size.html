@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en" >
+
+<head>
+  <meta charset="UTF-8">
+  <title>Masonry Gallery</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+<!-- CSS / Bootstrap --> 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+<link rel="stylesheet" href="plugins/bootstrap/css/bootstrap.css">
+<link rel="stylesheet" href="plugins/bootstrap/css/bootstrap-theme.css">
+    
+<!-- CSS / GoogleFont --> 
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
+    
+<!-- CSS / FontAwsome --> 
+<link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css'>
+
+<!-- CSS / Mansonry --> 
+<link rel="stylesheet" href="plugins/Mansonry/css/style.css">
+
+<!-- CSS / Sidebar -->     
+<link rel="stylesheet" href="plugins/Sidebar/css/style.css">
+  
+<!-- CSS / SweetAlert -->  
+<link rel="stylesheet" href="plugins/sweetalert/dist/sweetalert2.css">   
+    
+<!-- !!!! CSS / Template -->         
+<link rel="stylesheet" href="css/style.css">    
+</head>
+
+<body class="size"  onload="$('#contents').css('opacity', '1')">
+<nav class="sidebar-navigation hidden-lg-down" id="sidenav">
+	<ul>
+		<li onclick="location.href='/'">
+			<ion-icon name="ios-apps" style="font-size:24px;"></ion-icon>
+			<span class="tooltip">Main</span>
+		</li>
+		<li onclick="location.href='/device'">
+			<ion-icon name="ios-podium" style="font-size:24px;"></ion-icon>
+			<span class="tooltip">Compare Devices</span>
+		</li>
+		<li class="active" onclick="location.href='/size'">
+			<ion-icon name="ios-desktop" style="font-size:24px;"></ion-icon>
+			<span class="tooltip">Size Calibration</span>
+		</li>
+		<li onclick="location.href='/review'">
+			<ion-icon name="ios-paper" style="font-size:24px;"></ion-icon>
+			<span class="tooltip">Reviews</span>
+		</li>
+        <li onclick="location.href='/findstore'">
+			<ion-icon name="ios-map" style="font-size:24px;"></ion-icon>
+			<span class="tooltip">Find Store</span>
+		</li>
+		<li onclick="location.href='/aboutus'">
+			<ion-icon name="ios-business" style="font-size:24px;"></ion-icon>
+			<span class="tooltip">About Us</span>
+		</li>
+        <li onclick="location.href='/intro'">
+			<ion-icon name="ios-albums" style="font-size:24px;"></ion-icon>
+			<span class="tooltip">Intro</span>
+		</li>
+	</ul>
+</nav>
+  <section class="container-fluid gallery bg-faded" id="contents" >
+            <h3>Size Calibration</h3>
+              <input type='hidden' id="save1">
+                <input type='hidden' id="save2">
+      <ul>
+          <li><button class="btn-ch">Use Credit Card</button></li>
+          <li><button class="btn-ch">Use Driving License</button></li>
+          <li><button id="btn-save" class="btn-ch" style="background-color: #84817a">Save</button></li>
+      </ul>
+      <!-- 여기서부터 본문 -->
+      <div class="resize-container">
+        <div class="resize-drag"> Resize from any edge or corner</div>
+          <img id="sampleimg" src="img/phone/iphone_x.png">
+</div>
+</section>
+<!-- Modal -->
+    
+    
+<!-- JS / Jquery --> 
+<script src="plugins/Jquery/jquery-3.3.1.slim.min.js" ></script>
+
+<!-- JS / cookie --> 
+<script src="plugins/cookie/jquery.cookie.js" ></script>
+    
+<!-- JS / Bootstrap --> 
+<script src="plugins/bootstrap/js/bootstrap.js" ></script>
+    
+<!-- JS / Masonry -->    
+<script src='https://cdnjs.cloudflare.com/ajax/libs/masonry/3.3.2/masonry.pkgd.min.js'></script>    
+<script  src="plugins/Mansonry/js/index.js"></script>
+
+<!-- JS / Sidebar --> 
+<script  src="plugins/Sidebar/js/index.js"></script>
+
+<!-- JS / SweetAlert -->    
+<script src="plugins/sweetalert/dist/sweetalert2.js"></script> 
+    
+<!-- JS / Vue.js -->     
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>   
+
+<!-- JS / Interact --> 
+<script  src="plugins/interact/interact.js"></script>
+<script>
+var convertw;
+var converth;
+interact('.resize-drag')
+  .draggable({
+    onmove: window.dragMoveListener,
+    restrict: {
+      restriction: 'parent',
+      elementRect: { top: 0, left: 0, bottom: 1, right: 1 }
+    },
+  })
+  .resizable({
+    // resize from all edges and corners
+    edges: { left: true, right: true, bottom: true, top: true },
+
+    // keep the edges inside the parent
+    restrictEdges: {
+      outer: 'parent',
+      endOnly: true,
+    },
+
+    // minimum size
+    restrictSize: {
+      min: { width: 100, height: 50 },
+    },
+
+    inertia: true,
+  })
+  .on('resizemove', function (event) {
+    var target = event.target,
+        x = (parseFloat(target.getAttribute('data-x')) || 0),
+        y = (parseFloat(target.getAttribute('data-y')) || 0);
+
+    // update the element's style
+    target.style.width  = event.rect.width + 'px';
+    target.style.height = event.rect.height + 'px';
+
+    // translate when resizing from top or left edges
+    x += event.deltaRect.left;
+    y += event.deltaRect.top;
+
+    target.style.webkitTransform = target.style.transform =
+        'translate(' + x + 'px,' + y + 'px)';
+
+    target.setAttribute('data-x', x);
+    target.setAttribute('data-y', y);
+        convertw = Math.round(event.rect.width) / 54;
+        converth = Math.round(event.rect.height) / 85;
+        $('#save1').val(convertw);
+        $('#save2').val(converth);
+        $('#sampleimg').css("width",convertw*71);
+        $('#sampleimg').css("height",converth*147); 
+    target.textContent = Math.round(event.rect.width) + '\u00D7' + Math.round(event.rect.height);
+    
+  });    
+    
+
+function setCookie(cookieName, value, exdays){
+    var exdate = new Date();
+    exdate.setDate(exdate.getDate() + exdays);
+    var cookieValue = escape(value) + ((exdays==null) ? "" : "; expires=" + exdate.toGMTString());
+    document.cookie = cookieName + "=" + cookieValue;
+}
+ 
+function deleteCookie(cookieName){
+    var expireDate = new Date();
+    expireDate.setDate(expireDate.getDate() - 1);
+    document.cookie = cookieName + "= " + "; expires=" + expireDate.toGMTString();
+}
+ 
+function getCookie(cookieName) {
+    cookieName = cookieName + '=';
+    var cookieData = document.cookie;
+    var start = cookieData.indexOf(cookieName);
+    var cookieValue = '';
+    if(start != -1){
+        start += cookieName.length;
+        var end = cookieData.indexOf(';', start);
+        if(end == -1)end = cookieData.length;
+        cookieValue = cookieData.substring(start, end);
+    }
+    return unescape(cookieValue);
+}
+    
+$('#btn-save').click(function() {
+    localStorage.setItem('convertw', $('#save1').val());
+    localStorage.setItem('converth', $('#save2').val());
+     swal({
+                                width: '350px',
+                                type: 'success',
+                                title: 'Saved',
+                                text: 'Successfully Saved your information',
+                                footer: '<a></a>',
+                		      })
+});
+</script>    
+    
+<!-- JS / Ionicons -->     
+<script src="https://unpkg.com/ionicons@4.1.2/dist/ionicons.js"></script>
+
+
+
+
+</body>
+
+</html>
