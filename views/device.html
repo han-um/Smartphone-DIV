@@ -33,38 +33,57 @@
 </head>
 <body class="device" id="device" onload="$('#contents').css('opacity', '1')" >
 <div class="wrap">
-   <nav class="sidebar-navigation hidden-lg-down" id="sidenav">
-	<ul>
-		<li onclick="location.href='/'">
-			<ion-icon name="ios-apps" style="font-size:24px;"></ion-icon>
-			<span class="tooltip">Main</span>
-		</li>
-		<li class="active" onclick="location.href='/device'">
-			<ion-icon name="ios-podium" style="font-size:24px;"></ion-icon>
-			<span class="tooltip">Compare Devices</span>
-		</li>
-		<li onclick="location.href='/size'">
-			<ion-icon name="ios-desktop" style="font-size:24px;"></ion-icon>
-			<span class="tooltip">Size Calibration</span>
-		</li>
-		<li onclick="location.href='/review'">
-			<ion-icon name="ios-paper" style="font-size:24px;"></ion-icon>
-			<span class="tooltip">Reviews</span>
-		</li>
-        <li onclick="location.href='/findstore'">
-			<ion-icon name="ios-map" style="font-size:24px;"></ion-icon>
-			<span class="tooltip">Find Store</span>
-		</li>
-		<li onclick="location.href='/aboutus'">
-			<ion-icon name="ios-business" style="font-size:24px;"></ion-icon>
-			<span class="tooltip">About Us</span>
-		</li>
-        <li onclick="location.href='/intro'">
-			<ion-icon name="ios-albums" style="font-size:24px;"></ion-icon>
-			<span class="tooltip">Intro</span>
-		</li>
-	</ul>
-</nav>
+    <nav role="navigation" class="navigation">
+    <ul class="navigation__links"> 
+      <li>
+        <a class="navigation__link" href="/">
+          <ion-icon name="home"></ion-icon>
+          <p class="navigation__text sidebar-text" style="top:0px">Home</p>
+        </a>
+      </li>
+      
+      <li>
+        <a class="navigation__link  navigation-active" href="/device">
+         <ion-icon name="tablet-portrait"></ion-icon>
+          <p class="navigation__text sidebar-text" style="top:64px">Compare Devices</p>
+        </a>
+      </li>
+      
+      <li>
+        <a class="navigation__link" href="/size">
+          <ion-icon name="move"></ion-icon>
+          <p class="navigation__text sidebar-text" style="top:126px">Size Calibration</p>
+        </a>
+      </li>
+      
+      <li>
+        <a class="navigation__link" href="/review">
+          <ion-icon name="paper"></ion-icon>
+          <p class="navigation__text sidebar-text"  style="top:188px">Reviews</p>
+        </a>
+      </li>
+      <li>
+        <a class="navigation__link" href="/findstore">
+          <ion-icon name="map"></ion-icon>
+          <p class="navigation__text sidebar-text" style="top:250px">Find Store</p>
+        </a>
+      </li>
+    <li>
+        <a class="navigation__link" href="/aboutus">
+          <ion-icon name="hammer"></ion-icon>
+          <p class="navigation__text sidebar-text" style="top:312px">About Us</p>
+        </a>
+      </li>
+    <li>
+        <a class="navigation__link" href="/intro">
+          <ion-icon name="expand"></ion-icon>
+          <p class="navigation__text sidebar-text" style="top:374px">Intro</p>
+        </a>
+      </li>        
+
+    </ul>
+  </nav>
+    
     <!--스마트폰 선택 영역-->
     <div class="selector" id="selector">
         <ul id="selectorul">

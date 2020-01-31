@@ -369,3 +369,57 @@ body::-webkit-scrollbar {
 .MidPadding{
     padding-left:20px;
 }
+
+.navigation {
+	position: fixed;
+	height: 100%;
+	background-color: white;
+    z-index:10;
+}
+
+.navigation__links {
+	list-style: none;
+	padding: 0;
+}
+
+.navigation__links li {
+	border-right: 2px solid white;
+	border-top: 2px solid white;
+}
+
+
+.navigation__link {
+	padding: 20px;
+	display: block;
+	color: black;
+    z-index:100;
+}
+
+.navigation-active{
+    background-color:black;
+    color:white;
+}
+.navigation__link:hover .navigation__text {left: 54px;}
+
+.navigation__text {
+  padding: 20px 10px;
+  width: 150px;
+  margin: 0;
+  color: white;
+  left: -155px;
+  position: absolute;
+  transition: left 0.5s;
+}
+
+.navigation__text--home {
+	top: 0px;
+	background-color: #373948;
+	border: 2px solid #373948;
+}
+
+.sidebar-text{
+    background-color:white;
+    color:black;
+}
+
+
